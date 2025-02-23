@@ -5,4 +5,5 @@ for _ in range(28):
     n = int(input())
     students.remove(n)
 
+students.sort()
 print(*students, sep="\n")
