@@ -1,10 +1,11 @@
-K = int(input())
+import sys
+K = int(sys.stdin.readline())
 
 stack = []
 for _ in range(K):
-    x = int(input())
+    x = int(sys.stdin.readline())
     if x == 0:
-        stack.pop(-1)
+        stack.pop()
     else:
         stack.append(x)
 
