@@ -7,20 +7,18 @@ MAX = 50 + 10
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
 
-def dfs(graph, x, y, visited):
-    global count
-    visited[x][y] = True
+def dfs(graph, x, y):
+    graph[x][y] = False # 방문한 곳은 False 처리해서 visited 배열의 역할도 하게함.
     for i in range(4):
         x_ = x + dx[i]
         y_ = y + dy[i]
-        if graph[x_][y_] and not visited[x_][y_]:
-            dfs(graph, x_, y_, visited)
+        if graph[x_][y_]:
+            dfs(graph, x_, y_)
 
 T = int(input())
 for _ in range(T):
     M, N, K = map(int, input().split()) # 배추밭 가로 M, 세로 N, 배추 개수 K
     graph = [[False] * MAX for _ in range(MAX)]
-    visited = [[False] * MAX for _ in range(MAX)]
     
     # 1. 그래프 정보 입력
     for _ in range(K):
@@ -31,8 +29,8 @@ for _ in range(T):
     count = 0 # 배추 구역 개수(=필요한 지렁이 수)
     for i in range(1, N+1):
         for j in range(1, M+1):
-            if graph[i][j] and not visited[i][j]:
-                dfs(graph, i, j, visited)
+            if graph[i][j]:
+                dfs(graph, i, j)
                 count += 1
     
     print(count)
