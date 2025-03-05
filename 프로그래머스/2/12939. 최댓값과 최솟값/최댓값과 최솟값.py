@@ -3,8 +3,4 @@ def solution(s):
     s = s.strip().split(" ")
     numbers = [int(i) for i in s]
     
-    answer += (str(min(numbers)))
-    answer += " "
-    answer += (str(max(numbers)))
-    
-    return answer
+    return f"{str(min(numbers))} {str(max(numbers))}"
