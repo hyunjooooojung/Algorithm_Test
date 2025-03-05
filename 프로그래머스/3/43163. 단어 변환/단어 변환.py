@@ -18,7 +18,7 @@ def solution(begin, target, words): # BFS : 최소 단계 구하기
         return 0
     
     queue = deque([(begin, 0)])  # (현재 단어, 변환 횟수)
-    
+    visited = set() # 방문한 단어 체크
     while queue:
         now_word, count = queue.popleft()
         
@@ -26,7 +26,8 @@ def solution(begin, target, words): # BFS : 최소 단계 구하기
             return count
         
         for word in words:
-            if check_word(now_word, word):
+            if word not in visited and check_word(now_word, word):
+                visited.add(word)  # 방문 체크
                 queue.append((word, count+1))
                 
     return answer
