@@ -1,41 +1,39 @@
 import sys
 from collections import deque
+input = sys.stdin.readline
 
-# DFS 함수 (재귀)
-def dfs(graph, v, visited):
-    visited.append(v)
-    for i in sorted(graph[v]): # 작은 번호부터 방문
-        if i not in visited:
-            dfs(graph, i, visited)
+def dfs(V, visited1, graph):
+    visited1[V] = 1 # 방문처리
+    print(V, end=" ")
+    
+    for i in range(1, N+1):
+        if not visited1[i] and graph[V][i] == 1:
+            dfs(i, visited1, graph)
 
-# BFS 함수 (큐 사용)
-def bfs(graph, start):
-    visited = [] # 방문한 노드 기록
-    queue = deque([start]) # 큐 초기화
+def bfs(V, visited2, graph):
+    visited2[V] = 1 # 방문처리
+    queue = deque([V])
 
     while queue:
-        v = queue.popleft() # 큐에서 하나 꺼냄
-        if v not in visited:
-            visited.append(v) # 방문 처리
-            queue.extend(sorted(graph[v])) # 방문할 노드 추가 (작은 번호부터)
+        x = queue.popleft()
+        print(x, end=" ")
 
-    return visited
+        for i in range(1, N+1):
+            if not visited2[i] and graph[x][i] == 1:
+                queue.append(i)
+                visited2[i] = 1
 
-N, M, V = map(int, sys.stdin.readline().split()) # 정점 개수 N, 간선 개수 M, 탐색 시작 정점 번호 V
-graph = {i: [] for i in range(1, N + 1)} 
+N, M, V = map(int, input().split())
 
+graph = [[0] * (N+1) for _ in range(N+1)]
 for _ in range(M):
-    x, y = map(int, sys.stdin.readline().split())
-    graph[x].append(y)
-    graph[y].append(x) # 양방향 그래프
+    a, b = map(int, input().split())
+    graph[a][b] = 1
+    graph[b][a] = 1
 
-# DFS 실행
-dfs_visited = []
-dfs(graph, V, dfs_visited)
+visited1 = [0] * (N+1)
+visited2 = [0] * (N+1)
 
-# BFS 실행
-bfs_visited = bfs(graph, V)
-
-# 결과 출력
-print(" ".join(map(str, dfs_visited)))  # DFS 결과 출력
-print(" ".join(map(str, bfs_visited)))  # BFS 결과 출력
+dfs(V, visited1, graph)
+print()
+bfs(V, visited2, graph)
